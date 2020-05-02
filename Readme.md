@@ -2,9 +2,15 @@
 
 Schema to create circle-ci configuration with dhall.
 
-## Types
+## Builders
 
-List of available types
+List of available builders.
+
+### Configuration
+
+`Configuration` map to a whole configuration file.
+
+*Example*: see `example/main.dhall`
 
 ### Executors
 
@@ -15,7 +21,7 @@ List of available types
 - `Executor.docker executor-name docker-image`
 - `Executor.machine executor-name machine-image`
 
-Example:
+*Example*:
 
 ```dhall
 let dhall-circle = <repo-url>
