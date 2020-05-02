@@ -1,11 +1,16 @@
 let Executor = ./executor.dhall
 
+let Orb = ./orb.dhall
+
 let ConfigurationType
     : Type
-    = { executors : Executor.ConfigurationType }
+    = { executors : Executor.ConfigurationType, orbs : Orb.ConfigurationType }
 
-let Configuration =
+let buildConfiguration =
         λ(arg : ConfigurationType)
-      → { version = 2.1, executors = Executor.parseExecutors arg.executors }
+      → { version = 2.1
+        , executors = Executor.parseExecutors arg.executors
+        , orbs = arg.orbs
+        }
 
-in  { Configuration, Executor }
+in  { buildConfiguration, Executor, Orb }
