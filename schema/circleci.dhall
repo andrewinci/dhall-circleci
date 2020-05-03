@@ -6,11 +6,14 @@ let Step = ./step.dhall
 
 let Job = ./job.dhall
 
+let Workflow = ./workflow.dhall
+
 let ConfigurationType
     : Type
     = { orbs : Orb.ConfigurationType
       , executors : Executor.ConfigurationType
       , jobs : Job.ConfigurationType
+      , workflows : Workflow.ConfigurationType
       }
 
 let buildConfiguration =
@@ -19,6 +22,7 @@ let buildConfiguration =
         , orbs = arg.orbs
         , executors = Executor.parseExecutors arg.executors
         , jobs = Job.parseJobs arg.jobs
+        , workflows = Workflow.parseWorkflows arg.workflows
         }
 
-in  { buildConfiguration, Executor, Orb, Step, Job }
+in  { buildConfiguration, Executor, Orb, Step, Job, Workflow }

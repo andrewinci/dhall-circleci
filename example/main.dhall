@@ -8,6 +8,8 @@ let Step = dhall-circle.Step
 
 let Job = dhall-circle.Job
 
+let Workflow = dhall-circle.Workflow
+
 let orbs =
       { slack = Orb.orb "circleci/slack@3.4.1"
       , aws-cli = Orb.orb "circleci/aws-cli@1.0.0"
@@ -56,13 +58,25 @@ let jobs =
             }
       }
 
+let wf_job1 =
+      Workflow.job { job = jobs.job1, requires = Workflow.noRequirements }
+
+let wf_job2 = Workflow.job { job = jobs.job2, requires = [ wf_job1 ] }
+
+let workflows = { workflow_1 = [ wf_job1, wf_job2 ], workflow_2 = [ wf_job1 ], workflow_3 = [ wf_job2 ] }
+
 in  { configSample1 =
         dhall-circle.buildConfiguration
           { orbs = Some (toMap orbs)
           , executors = Some (toMap executors)
           , jobs = toMap jobs
+          , workflows = toMap workflows
           }
     , configSample2 =
         dhall-circle.buildConfiguration
-          { orbs = Orb.empty, executors = Executor.empty, jobs = toMap jobs }
+          { orbs = Orb.empty
+          , executors = Executor.empty
+          , jobs = toMap jobs
+          , workflows = toMap workflows
+          }
     }

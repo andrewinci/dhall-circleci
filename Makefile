@@ -1,7 +1,7 @@
 SOURCES:=$(wildcard */*.dhall *.dhall)
 
 build:
-	dhall-to-yaml-ng --explain --omit-empty  --file example/main.dhall
+	dhall-to-yaml-ng --explain  --file example/main.dhall
 
 .PHONY: $(SOURCES)
 format: $(SOURCES)
