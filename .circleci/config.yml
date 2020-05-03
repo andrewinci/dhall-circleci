@@ -1,0 +1,17 @@
+executors:
+  "alpine-executor":
+    docker:
+    - image: alpine
+jobs:
+  Hello world job:
+    executor: "alpine-executor"
+    steps:
+    - run:
+        command: echo Hello world
+        name: Echo something
+version: 2.1
+workflows:
+  run:
+    jobs:
+    - Hello world job:
+        requires: []
