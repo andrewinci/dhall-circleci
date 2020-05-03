@@ -1,9 +1,6 @@
 SOURCES:=$(wildcard schema/*.dhall)
 TESTS:=$(wildcard tests/*)
 
-build:
-	dhall-to-yaml-ng --explain  --file example/main.dhall
-
 .PHONY: tests/* schema/*
 
 test: $(TESTS)
