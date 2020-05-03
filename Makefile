@@ -1,11 +1,18 @@
-SOURCES:=$(wildcard */*.dhall *.dhall)
+SOURCES:=$(wildcard schema/*.dhall)
+TESTS:=$(wildcard tests/*)
 
 build:
 	dhall-to-yaml-ng --explain  --file example/main.dhall
 
-.PHONY: $(SOURCES)
+.PHONY: tests/* schema/*
+
+test: $(TESTS)
 format: $(SOURCES)
 
-$(SOURCES):
+tests/*:
+	dhall-to-yaml-ng --file $@
+	dhall-to-yaml-ng --file $@ | circleci config validate -
+
+schema/*:
 	dhall lint --inplace $@
 	dhall format --inplace $@

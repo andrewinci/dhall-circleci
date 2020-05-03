@@ -63,7 +63,11 @@ let wf_job1 =
 
 let wf_job2 = Workflow.job { job = jobs.job2, requires = [ wf_job1 ] }
 
-let workflows = { workflow_1 = [ wf_job1, wf_job2 ], workflow_2 = [ wf_job1 ], workflow_3 = [ wf_job2 ] }
+let workflows =
+      { workflow_1 = [ wf_job1, wf_job2 ]
+      , workflow_2 = [ wf_job1 ]
+      , workflow_3 = [ wf_job2 ]
+      }
 
 in  { configSample1 =
         dhall-circle.buildConfiguration

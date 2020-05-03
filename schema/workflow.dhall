@@ -27,7 +27,8 @@ let parseIn
 let parseOut
     : Type
     = { mapKey : Text
-      , mapValue : { jobs: List (List { mapKey : Text, mapValue : WorkflowContent })}
+      , mapValue :
+          { jobs : List (List { mapKey : Text, mapValue : WorkflowContent }) }
       }
 
 let mapWorkflowJob
