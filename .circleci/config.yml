@@ -1,17 +1,31 @@
 executors:
-  "alpine-executor":
+  alpine:
     docker:
     - image: alpine
 jobs:
-  Hello world job:
-    executor: "alpine-executor"
+  Make:
+    executor: alpine
     steps:
     - run:
-        command: echo Hello world
-        name: Echo something
+        command: |
+          apk add jq curl make git openssh
+        name: Install dependencies
+    - run:
+        command: |
+          cd /
+          curl -L -O https://github.com/dhall-lang/dhall-haskell/releases/download/1.31.1/dhall-yaml-1.0.3-x86_64-linux.tar.bz2
+          tar xvf dhall*.tar.bz2
+          rm -rf dhall-*.tar.bz2
+          curl -L -O https://github.com/dhall-lang/dhall-haskell/releases/download/1.31.1/dhall-1.31.1-x86_64-linux.tar.bz2
+          tar xvf dhall*.tar.bz2
+        name: "Install dhall-yaml"
+    - checkout
+    - run:
+        command: make
+        name: Test
 version: 2.1
 workflows:
-  run:
+  test:
     jobs:
-    - Hello world job:
+    - Make:
         requires: []
