@@ -63,4 +63,11 @@ let empty
     : Optional (List parseIn)
     = None (List parseIn)
 
-in  { ConfigurationType, empty, parseExecutors, Executor, docker, machine }
+in  { ExecutorData
+    , ConfigurationType
+    , empty
+    , parseExecutors
+    , Executor
+    , docker
+    , machine
+    }

@@ -107,3 +107,21 @@ executor-name:
     param1: '123'
     param2: '321'
 ```
+
+### Job
+
+`Job` map to [CircleCI Job](https://circleci.com/docs/2.0/configuration-reference/#jobs)
+
+*Builders*:
+
+```dhall
+Job.job "job-name"
+    { executor: executor
+    , steps=[List of steps]
+    }
+```
+
+To specify the executor we can use:
+
+- `Job.executorInline`
+- `Job.executorReference`
