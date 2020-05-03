@@ -60,7 +60,7 @@ let parseJobs
           parseIn
           parseOut
           (   λ(exec : parseIn)
-            → { mapKey = exec.mapKey, mapValue = exec.mapValue.data }
+            → { mapKey = exec.mapValue.name, mapValue = exec.mapValue.data }
           )
           x
 
