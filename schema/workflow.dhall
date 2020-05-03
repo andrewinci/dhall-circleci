@@ -27,7 +27,7 @@ let parseIn
 let parseOut
     : Type
     = { mapKey : Text
-      , mapValue : List (List { mapKey : Text, mapValue : WorkflowContent })
+      , mapValue : { jobs: List (List { mapKey : Text, mapValue : WorkflowContent })}
       }
 
 let mapWorkflowJob
@@ -47,7 +47,7 @@ let parseWorkflows
           parseIn
           parseOut
           (   λ(x : parseIn)
-            → { mapKey = x.mapKey, mapValue = mapWorkflowJob x.mapValue }
+            → { mapKey = x.mapKey, mapValue.jobs = mapWorkflowJob x.mapValue }
           )
           arg
 
