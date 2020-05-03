@@ -1,6 +1,6 @@
 # dhall-circleci
 
-Schema to create circle-ci configuration with dhall.
+Set of functions to create a circle-ci configuration with dhall.
 
 ## Builders
 
@@ -16,44 +16,94 @@ List of available builders.
 
 `Executor` map to [CircleCI Executor](https://circleci.com/docs/2.0/configuration-reference/#executors-requires-version-21)
 
-*Syntax*:
+*Builders*:
 
 - `Executor.docker "executor-name" "docker-image"`
+
+```yaml
+executor-name:
+    docker:
+    - image: docker-image
+```
+
 - `Executor.machine "executor-name" "machine-image"`
 
-*Example*:
-
-```dhall
-let dhall-circle = <repo-url>
-
--- import Executor package
-let Executor = dhall-circle.Executor
-
---  docker executor
-
-let terraform = Executor.docker "terraform" "hashicorp/terraform"
-
--- machine executor
-
-ubuntu = Executor.machine "ubuntu" "ubuntu-1604:201903-01"
+```yaml
+executor-name:
+    machine:
+    image: "machine-image"
 ```
 
 ### Orb
 
 `Orb` map to [CircleCI Orb](https://circleci.com/docs/2.0/configuration-reference/#orbs-requires-version-21)
 
-*Syntax*:
+*Builders*:
 
 - `Orb.orb "orb-name"`
 
-*Example*:
+```yaml
+"orb-name"
+```
 
-```dhall
-let dhall-circle = <repo-url>
+### Step
 
--- import Orb package
-let Orb = dhall-circle.Orb
+`Step` map to [CircleCI Steps](https://circleci.com/docs/2.0/configuration-reference/#steps)
 
-let aws-cli-orb = Orb.orb "circleci/aws-cli@1.0.0"
+*Builders*:
 
+- `Step.checkout`
+
+```yaml
+- checkout
+```
+
+- `Step.attachWorkspaceAt "path"`
+
+``` yaml
+- attach_workspace:
+    at: path
+```
+
+- `Step.storeTestResultsFrom "test-path"`
+
+``` yaml
+- store_test_results:
+    path: "test-path"
+```
+
+- `Step.run
+  { command =
+      ''
+      command here
+      ''
+  , name = "step name"
+  }`
+
+```yaml
+- run:
+    command: |
+      command here
+    name: Run sample step
+```
+
+- `Step.persistToWorkspace "root" [ "file1.txt", "file2.txt" ]`
+
+```yaml
+- persist_to_workspace:
+    paths:
+    - file1.txt
+    - file2.txt
+    root: root
+```
+
+- `Step.step
+  { name = "custom step"
+  , parameters = toMap { param1 = "123", param2 = "321" }
+  }`
+
+```yaml
+- custom step:
+    param1: '123'
+    param2: '321'
 ```
